@@ -7,33 +7,49 @@
       </div>
       <h3>Login</h3>
       <ion-card-content>
+        <ion-button color="primary" style="margin-bottom: 10px" expand="block" size="medium" (click)="toggleLoginMethod()">
+          {{ loginMethod === 'email' ? 'Sign in with OTP' : 'Sign in with Password' }}
+        </ion-button>
+
         <form *ngIf="loginMethod === 'email'">
           <ion-list class="ion-no-margin" lines="full">
             <ion-item>
               <ion-label position="stacked">Email</ion-label>
               <ion-input type="email" name="email" [placeholder]="'Please Enter Email'" [(ngModel)]="email"></ion-input>
             </ion-item>
-            <ion-button color="primary" style="margin-bottom: 10px" expand="block" size="medium" (click)="submitForm()">
-              {{ loginMethod === 'email' ? 'Login' : 'Login with OTP' }}
-              <ion-spinner name="lines-small" *ngIf="loading"></ion-spinner>
+            <ion-item>
+              <ion-label position="stacked">Password</ion-label>
+              <ion-row>
+                <ion-col size="10" size-sm="10">
+                  <ion-input type="password" name="password" [placeholder]="'Please Enter Password'"></ion-input>
+                </ion-col>
+                <ion-col size="2" size-sm="2">
+                  <ion-button fill="clear">
+                    <ion-icon item-end slot="icon-only" [name]="passwordIcon"></ion-icon>
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-item>
+            <ion-button color="primary" style="margin-bottom: 10px" expand="block" size="medium" type="submit">
+              Login
+              <ion-spinner name="lines-small"></ion-spinner>
             </ion-button>
-            
           </ion-list>
         </form>
 
         <form *ngIf="loginMethod === 'otp'">
           <ion-list class="ion-no-margin" lines="full">
-            <ion-item>
+            <ion-item *ngIf="!otpEmailEntered">
               <ion-label position="stacked">Email</ion-label>
-              <ion-input type="email" name="email" [value]="email" disabled></ion-input>
+              <ion-input type="email" name="otpEmail" [placeholder]="'Please Enter Email'" [(ngModel)]="otpEmail"></ion-input>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="otpEmailEntered">
               <ion-label position="stacked">OTP</ion-label>
-              <ion-input type="text" name="otp" [placeholder]="'Please Enter OTP'"></ion-input>
+              <ion-input type="text" name="otp" [placeholder]="'Please Enter OTP'" [(ngModel)]="otp"></ion-input>
             </ion-item>
-            <ion-button color="primary" style="margin-bottom: 10px" expand="block" size="medium" type="submit">
-              Login with OTP
-              <ion-spinner name="lines-small" *ngIf="loading"></ion-spinner>
+            <ion-button color="primary" style="margin-bottom: 10px" expand="block" size="medium" type="submit" (click)="toggleOTPEmail()">
+              {{ otpEmailEntered ? 'Check Your OTP' : 'Get OTP' }}
+              <ion-spinner name="lines-small"></ion-spinner>
             </ion-button>
           </ion-list>
         </form>

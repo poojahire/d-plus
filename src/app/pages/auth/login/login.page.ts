@@ -10,12 +10,18 @@ export class LoginPage implements OnInit {
   passwordIcon = 'eye-off';
   loginMethod: string = 'email'; // Initialize it with a default value
   email: string = ''; // Initialize the email property
-  loading: boolean = false; // Initialize the loading property
+  otpEmail: string = ''; // Initialize the email for OTP
+
+  otp: string = ''; // Initialize the OTP property
+  otpEmailEntered: boolean = false; // Initialize the flag
 
   toggleLoginMethod() {
     this.loginMethod = this.loginMethod === 'email' ? 'otp' : 'email';
   }
 
+  toggleOTPEmail() {
+    this.otpEmailEntered = !this.otpEmailEntered;
+  }
   submitForm() {this.loginMethod = this.loginMethod === 'email' ? 'otp' : 'email';
   }
   constructor() { }
